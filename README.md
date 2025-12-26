@@ -312,5 +312,3 @@ For questions or feedback, please open an issue on GitHub.
 ---
 
 ⭐ **Star this repository if you find it helpful!**
-
-Built with ❤️ using React, Node.js, MongoDB, and AI
