@@ -27,7 +27,7 @@ export const applicationsAPI = {
     addReminder: (id, reminderData) => api.post(`/api/applications/${id}/reminders`, reminderData),
 
     // Get statistics
-    getStats: () => api.get('/applications/stats/summary')
+    getStats: () => api.get('/api/applications/stats/summary')
 };
 
 export default applicationsAPI;
