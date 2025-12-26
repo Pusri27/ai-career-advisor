@@ -51,6 +51,51 @@ router.get('/skills', protect, async (req, res) => {
     }
 });
 
+// @route   GET /api/progress/skill-history
+// @desc    Alias for /skills endpoint
+// @access  Private
+router.get('/skill-history', protect, async (req, res) => {
+    try {
+        const { days = '30', skill } = req.query;
+        const daysInt = parseInt(days);
+
+        const history = await SkillHistory.getSkillHistory(
+            req.user._id,
+            skill || null,
+            daysInt
+        );
+
+        // Group by skill
+        const groupedBySkill = history.reduce((acc, record) => {
+            if (!acc[record.skill]) {
+                acc[record.skill] = [];
+            }
+            acc[record.skill].push({
+                level: record.level,
+                date: record.recordedAt,
+                source: record.source
+            });
+            return acc;
+        }, {});
+
+        res.json({
+            success: true,
+            data: {
+                skills: Object.keys(groupedBySkill).map(skillName => ({
+                    name: skillName,
+                    history: groupedBySkill[skillName]
+                }))
+            }
+        });
+    } catch (error) {
+        console.error('Get skill history error:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
 // @route   GET /api/progress/analytics
 // @desc    Get analytics summary
 // @access  Private
