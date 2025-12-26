@@ -53,6 +53,7 @@ export const agentAPI = {
     analyzeSkills: (skills) => api.post('/api/agent/analyze-skills', { skills }),
     getCareerAdvice: (profile) => api.post('/api/agent/career-advice', { profile }),
     getJobRecommendations: (profile) => api.post('/api/agent/job-recommendations', { profile }),
+    matchJobs: (profile) => api.post('/api/agent/job-recommendations', { profile }), // Alias
     getLearningPath: (skillGaps) => api.post('/api/agent/learning-path', { skillGaps }),
     getFullAnalysis: (profile) => api.post('/api/agent/full-analysis', { profile }),
     chat: (message, context) => api.post('/api/agent/chat', { message, context })
