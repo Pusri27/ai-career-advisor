@@ -74,4 +74,10 @@ export const applicationsAPI = {
     delete: (id) => api.delete(`/api/applications/${id}`)
 };
 
+// Jobs API
+export const jobsAPI = {
+    search: (params) => api.get('/api/jobs/search', { params }),
+    getDetails: (id) => api.get(`/api/jobs/${id}`)
+};
+
 export default api;
