@@ -125,6 +125,44 @@ router.post('/match-jobs', protect, async (req, res) => {
     }
 });
 
+// @route   POST /api/agent/job-recommendations
+// @desc    Alias for match-jobs
+// @access  Private
+router.post('/job-recommendations', protect, async (req, res) => {
+    try {
+        const profile = await CareerProfile.findOne({ user: req.user._id });
+
+        if (!profile) {
+            return res.status(404).json({
+                success: false,
+                message: 'Career profile not found'
+            });
+        }
+
+        const query = profile.targetRole || profile.currentRole || 'software developer';
+        const jobs = await jobSearchService.searchJobs({
+            query,
+            location: profile.preferredLocation,
+            remoteOnly: profile.preferredWorkStyle === 'remote'
+        });
+
+        const result = await orchestrator.runJobMatching(profile, jobs);
+
+        res.json({
+            success: result.success,
+            jobs,
+            analysis: result.data,
+            error: result.error
+        });
+    } catch (error) {
+        console.error('Job Recommendations Error:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
 // @route   POST /api/agent/learning-path
 // @desc    Get learning recommendations
 // @access  Private
