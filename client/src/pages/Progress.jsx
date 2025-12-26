@@ -82,14 +82,14 @@ export default function Progress() {
         setLoading(true);
         try {
             const [historyRes, analyticsRes, goalsRes] = await Promise.all([
-                progressAPI.getSkillHistory({ timeRange }),
+                progressAPI.getSkillHistory(parseInt(timeRange)),
                 progressAPI.getAnalytics(),
                 progressAPI.getGoals('active')
             ]);
 
-            setSkillHistory(historyRes.data.data.skills);
+            setSkillHistory(historyRes.data.data || []);
             setAnalytics(analyticsRes.data.data);
-            setGoals(goalsRes.data.data);
+            setGoals(goalsRes.data.data || []);
         } catch (error) {
             console.error('Failed to fetch progress data:', error);
         } finally {
