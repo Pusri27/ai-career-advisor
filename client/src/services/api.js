@@ -56,6 +56,7 @@ export const agentAPI = {
     matchJobs: (profile) => api.post('/api/agent/job-recommendations', { profile }), // Alias
     getLearningPath: (skillGaps) => api.post('/api/agent/learning-path', { skillGaps }),
     getFullAnalysis: (profile) => api.post('/api/agent/full-analysis', { profile }),
+    fullAnalysis: () => api.post('/api/agent/full-analysis'), // Alias for Dashboard
     chat: (message, context) => api.post('/api/agent/chat', { message, context })
 };
 
