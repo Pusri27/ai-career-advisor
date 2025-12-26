@@ -19,10 +19,13 @@ export default function Login() {
         setLoading(true);
 
         try {
-            await login(formData.email, formData.password);
+            console.log('Attempting login...');
+            const result = await login(formData.email, formData.password);
+            console.log('Login successful:', result);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Login failed. Please try again.');
+            console.error('Login error:', err);
+            setError(err.response?.data?.message || err.message || 'Login failed. Please try again.');
         } finally {
             setLoading(false);
         }
