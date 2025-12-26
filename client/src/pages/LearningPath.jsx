@@ -27,7 +27,9 @@ export default function LearningPath() {
         setGenerating(true);
         try {
             const result = await getLearningPath();
-            setLearningData(result.data);
+            console.log('Learning Path API Result:', result);
+            console.log('Learning Path Data:', result.data);
+            setLearningData(result.data || result);
         } catch (error) {
             console.error('Failed to generate learning path:', error);
         } finally {
