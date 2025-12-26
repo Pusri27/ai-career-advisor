@@ -87,7 +87,8 @@ export default function Progress() {
                 progressAPI.getGoals('active')
             ]);
 
-            setSkillHistory(historyRes.data.data || []);
+            // API returns { success, data: { skills: [...] } }
+            setSkillHistory(historyRes.data.data?.skills || []);
             setAnalytics(analyticsRes.data.data);
             setGoals(goalsRes.data.data || []);
         } catch (error) {
