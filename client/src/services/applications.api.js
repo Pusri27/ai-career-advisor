@@ -10,29 +10,21 @@ export const applicationsAPI = {
         if (order) queryParams.append('order', order);
 
         const query = queryParams.toString();
-        return api.get(`/applications${query ? `?${query}` : ''}`);
+        return api.get(`/api/applications${query ? `?${query}` : ''}`);
     },
-
-    // Get single application
-    getById: (id) => api.get(`/applications/${id}`),
-
-    // Create application
-    create: (applicationData) => api.post('/applications', applicationData),
-
-    // Update application
-    update: (id, applicationData) => api.put(`/applications/${id}`, applicationData),
-
-    // Delete application
-    delete: (id) => api.delete(`/applications/${id}`),
+    getById: (id) => api.get(`/api/applications/${id}`),
+    create: (applicationData) => api.post('/api/applications', applicationData),
+    update: (id, applicationData) => api.put(`/api/applications/${id}`, applicationData),
+    delete: (id) => api.delete(`/api/applications/${id}`),
 
     // Update status
-    updateStatus: (id, status) => api.put(`/applications/${id}/status`, { status }),
+    updateStatus: (id, status) => api.put(`/api/applications/${id}/status`, { status }),
 
     // Add interview
-    addInterview: (id, interviewData) => api.post(`/applications/${id}/interviews`, interviewData),
+    addInterview: (id, interviewData) => api.post(`/api/applications/${id}/interviews`, interviewData),
 
     // Add reminder
-    addReminder: (id, reminderData) => api.post(`/applications/${id}/reminders`, reminderData),
+    addReminder: (id, reminderData) => api.post(`/api/applications/${id}/reminders`, reminderData),
 
     // Get statistics
     getStats: () => api.get('/applications/stats/summary')

@@ -9,24 +9,19 @@ export const progressAPI = {
         if (skill) queryParams.append('skill', skill);
         return api.get(`/progress/skills?${queryParams}`);
     },
-
-    // Get analytics summary
-    getAnalytics: () => api.get('/progress/analytics'),
-
     // Goals
-    getGoals: (status) => {
-        const params = status ? `?status=${status}` : '';
-        return api.get(`/progress/goals${params}`);
-    },
+    getGoals: (status = 'active') => api.get(`/api/progress/goals`, { params: { status } }),
+    createGoal: (data) => api.post('/api/progress/goals', data),
+    updateGoal: (id, data) => api.put('/api/progress/goals/${id}', data),
+    deleteGoal: (id) => api.delete(`/api/progress/goals/${id}`),
+    updateMilestone: (goalId, milestoneId, completed) =>
+        api.put(`/api/progress/goals/${goalId}/milestones/${milestoneId}`, { completed }),
 
-    createGoal: (goalData) => api.post('/progress/goals', goalData),
+    // Skill History
+    getSkillHistory: (days = 30) => api.get(`/api/progress/skill-history`, { params: { days } }),
 
-    updateGoal: (id, goalData) => api.put(`/progress/goals/${id}`, goalData),
-
-    deleteGoal: (id) => api.delete(`/progress/goals/${id}`),
-
-    completeMilestone: (goalId, milestoneIndex) =>
-        api.post(`/progress/goals/${goalId}/milestones/${milestoneIndex}`)
+    // Analytics
+    getAnalytics: () => api.get('/api/progress/analytics')
 };
 
 export default progressAPI;
